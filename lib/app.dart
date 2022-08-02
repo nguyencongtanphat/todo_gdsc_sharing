@@ -11,6 +11,8 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final listTask = [];
+
   void addNewTaskHandler() {
     showDialog(
         context: context,
