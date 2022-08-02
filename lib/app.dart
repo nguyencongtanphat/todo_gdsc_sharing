@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_gdsc_sharing/widgets/AppDialog.dart';
 import 'package:todo_gdsc_sharing/widgets/Header.dart';
 import 'package:todo_gdsc_sharing/widgets/TaskItem.dart';
 
@@ -14,44 +15,7 @@ class _AppState extends State<App> {
     showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            title: const Text(
-              "Add new Task",
-            ),
-            content: TextFormField(
-              style: const TextStyle(
-                fontSize: 18,
-              ),
-              decoration: const InputDecoration(hintText: "Type task here!!!"),
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    "Save",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 217, 196, 2),
-                      fontSize: 18,
-                    ),
-                  )),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  "Close",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ],
-          );
+          return AppDialog();
         });
   }
 
