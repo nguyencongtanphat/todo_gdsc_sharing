@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_gdsc_sharing/model/Task.dart';
 import 'package:todo_gdsc_sharing/widgets/AppDialog.dart';
 import 'package:todo_gdsc_sharing/widgets/Header.dart';
 import 'package:todo_gdsc_sharing/widgets/TaskItem.dart';
@@ -11,13 +12,39 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final listTask = [];
+  TextEditingController controller = TextEditingController();
+  final List<Task> listTask = [
+    Task(content: "di choi voi nguoi iu"),
+    Task(content: "di choi voi nguoi iu 1"),
+    Task(content: "di choi voi nguoi iu 2"),
+  ];
 
-  void addNewTaskHandler() {
+  void addTaskHandler(String content) {
+    //handler add new task to list
+    if (content.trim().isNotEmpty) {
+      setState(() {
+        listTask.add(Task(content: content));
+      });
+    }
+  }
+
+  void toggleStatusHandler(Task task, bool? newStatus) {
+    // index of task we want toggle
+    int index = listTask.indexOf(task);
+    setState(() {
+      listTask[index].status = newStatus!;
+    });
+  }
+
+  void openTaskDialogHandler() {
+    //open the dialog to add new task
     showDialog(
         context: context,
         builder: (context) {
-          return AppDialog();
+          return AppDialog(
+            onPress: addTaskHandler,
+            controller: controller,
+          );
         });
   }
 
@@ -27,7 +54,7 @@ class _AppState extends State<App> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          addNewTaskHandler();
+          openTaskDialogHandler();
         },
       ),
       body: Column(children: [
@@ -35,9 +62,12 @@ class _AppState extends State<App> {
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return const TaskItem();
+              return TaskItem(
+                task: listTask[index],
+                toggleStatusHandler: toggleStatusHandler,
+              );
             },
-            itemCount: 5,
+            itemCount: listTask.length,
           ),
         )
       ]),

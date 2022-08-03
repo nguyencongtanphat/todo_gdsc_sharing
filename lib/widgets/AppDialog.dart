@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppDialog extends StatelessWidget {
+  final TextEditingController? controller;
+  final Function? onPress;
   const AppDialog({
     Key? key,
+    required this.controller,
+    this.onPress,
   }) : super(key: key);
 
   @override
@@ -12,6 +16,7 @@ class AppDialog extends StatelessWidget {
         "Add new Task",
       ),
       content: TextFormField(
+        controller: controller,
         style: const TextStyle(
           fontSize: 18,
         ),
@@ -20,6 +25,10 @@ class AppDialog extends StatelessWidget {
       actions: [
         TextButton(
             onPressed: () {
+              if (onPress != null) {
+                onPress!(controller?.text);
+              }
+              controller?.clear();
               Navigator.of(context).pop();
             },
             child: const Text(
